@@ -36,7 +36,8 @@ public class ClientRunnable extends Thread {
 
         // Specify entry point
         String endpoint = ENTRYURL + CONTEXTURL + "/skiers";
-        // String endpoint = ENTRYURL + CONTEXTURL + "/skiers/{1}/seasons/{2}/days/{3}/skiers/{4}";
+        // String endpoint = ENTRYURL + CONTEXTURL + "/skiers/1/seasons/2022/days/1/skiers/4";
+        // String endpoint = ENTRYURL + CONTEXTURL + "/skiers/0/seasons/2/days/3/skiers/4";
         System.out.println("Invoking: " + endpoint);
 
         // Create request to ping for connection
@@ -76,7 +77,7 @@ public class ClientRunnable extends Thread {
     @Override
     public void run() {
 
-        // Step 1: Create client and test server connection
+        // Step 1: Create client and test server connection (not done for each thread)
 		HttpClient client = HttpClient.newHttpClient();
         if (testConnectivity(client)) {
             System.out.println("Client connected.");
