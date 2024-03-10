@@ -7,10 +7,14 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 public class ClientRunnable extends Thread {
 
     private static final String ENTRYURL = "http://127.0.0.1:8080"; // Constant IP:Port
+    private static final String CONTEXTURL = "/skiresortApp"; // Constant IP:Port
     private static ExecutorService executorService;
 
     private final int threadCount;
@@ -31,9 +35,11 @@ public class ClientRunnable extends Thread {
     public static boolean testConnectivity(HttpClient client) {
 
         // Specify entry point
-        String chosenEnd = "/skiers/SkiServlet";
-        String endpoint = ENTRYURL + chosenEnd;
+        String endpoint = ENTRYURL + CONTEXTURL + "/skiers";
+        // String endpoint = ENTRYURL + CONTEXTURL + "/skiers/{1}/seasons/{2}/days/{3}/skiers/{4}";
+        System.out.println("Invoking: " + endpoint);
 
+        // Create request to ping for connection
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(URI.create(endpoint))
                 .POST(HttpRequest.BodyPublishers.noBody())
