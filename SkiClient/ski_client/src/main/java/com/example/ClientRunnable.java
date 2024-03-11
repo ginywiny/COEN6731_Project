@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -155,8 +154,6 @@ public class ClientRunnable extends Thread {
                     } catch (Exception e) {
                         System.err.println("Error request failed: " + e.getMessage());
                     }
-
-
                 }
             });
         }

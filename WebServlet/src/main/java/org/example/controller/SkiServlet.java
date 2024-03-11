@@ -7,12 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.*;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 
 @WebServlet(value = "skiers/*")
@@ -98,7 +95,7 @@ public class SkiServlet extends HttpServlet {
         // Read request body
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = request.getReader();
-        SkiLiftRideEvent lift = new SkiLiftRideEvent(-1, -1, -1, -1, -1, -1);
+        SkiLiftRideEvent lift = new SkiLiftRideEvent(0, 0, 0, 0, 0, 0);
         Gson gson = new Gson();
 
         try {
@@ -114,7 +111,7 @@ public class SkiServlet extends HttpServlet {
 
         // Convert request body from json to SkiLiftRideEvent
         try {
-            lift = gson.fromJson(sb.toString(), SkiLiftRideEvent.class);
+            lift = (SkiLiftRideEvent) gson.fromJson(sb.toString(), SkiLiftRideEvent.class);
             return lift;
         } catch (JsonSyntaxException e) {
             // Handle JSON parsing error

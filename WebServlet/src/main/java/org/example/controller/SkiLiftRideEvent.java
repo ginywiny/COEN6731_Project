@@ -11,6 +11,7 @@ public class SkiLiftRideEvent {
     SkiLiftRideEvent(int skierID, int resortID, int liftID, int seasonID, int dayID, int time) {
         this.skierID = skierID;
         this.resortID = resortID;
+        this.liftID = liftID;
         this.seasonID = seasonID;
         this.dayID = dayID;
         this.time = time;
