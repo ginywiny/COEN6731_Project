@@ -179,7 +179,11 @@ public class ClientRunnable extends Thread {
                             System.out.println("Retrying request 5 times...");
                             // Retry 5 more times
                             for (int k = 0; k < requestRetryCount; k++) {
+                                start = System.currentTimeMillis();
+                                startTimeList.add(start);
                                 response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+                                end = System.currentTimeMillis();
+                                endTimeList.add(end);
                                 requestTypeList.add("POST");
                                 responseTypeList.add(response.statusCode());
 
