@@ -19,7 +19,8 @@ import com.google.gson.Gson;
 
 public class ClientRunnable extends Thread {
 
-    private static final String ENTRYURL = "http://127.0.0.1:8080"; // Constant IP:Port
+    // private static final String ENTRYURL = "http://127.0.0.1:8080"; // Constant IP:Port
+    private static final String ENTRYURL = "http://168.138.75.189:8080"; // PRODUCTION
     private static final String CONTEXTURL = "/skiresortApp"; // Constant IP:Port
     private static final AtomicInteger atomicSuccessCount = new AtomicInteger(0);
     private static final AtomicInteger atomicRequestCount = new AtomicInteger(0);
