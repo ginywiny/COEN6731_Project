@@ -1,4 +1,4 @@
-package com.example;
+package org.example.controller;
 
 public class SkiLiftRideEvent {
     private int skierID;
@@ -39,4 +39,5 @@ public class SkiLiftRideEvent {
     public int getTime() {
         return time;
     }
+
 }

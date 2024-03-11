@@ -11,7 +11,7 @@ class WebServletTest {
 	void testSkiServletGet() throws Exception {
 		HttpClient client = new HttpClient();
         client.start();
-        ContentResponse res = client.GET("http://168.138.75.189:8080/skiresortApp/SkiServlet");
+        ContentResponse res = client.GET("http://168.138.75.189:8080/skiresortApp/skiers");
         System.out.println(res.getContentAsString());
         client.stop();
 	}

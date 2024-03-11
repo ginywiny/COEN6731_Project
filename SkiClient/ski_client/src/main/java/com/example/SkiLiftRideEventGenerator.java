@@ -4,9 +4,8 @@ import java.util.Random;
 
 public class SkiLiftRideEventGenerator implements Runnable{
 
-    public SkiLiftRideEventGenerator() {
-
-    }
+    private SkiLiftRideEvent lift;
+    public SkiLiftRideEventGenerator() {}
 
     public SkiLiftRideEvent generateRandomSkiLiftRide() {
         Random rand = new Random();
@@ -22,8 +21,6 @@ public class SkiLiftRideEventGenerator implements Runnable{
 
     @Override
     public void run() {
-
+        this.lift = generateRandomSkiLiftRide();
     }
-
-    
 }
