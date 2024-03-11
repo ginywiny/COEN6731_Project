@@ -1,5 +1,8 @@
 package com.example;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -85,6 +88,27 @@ public class ClientRunnable extends Thread {
             return false;
         }
     }
+
+    public static void writeToFile(List<Long> startTimeList, List<Long> unorderedLatencyTimeList, List<String> requestTypeList, List<Integer> responseTypeList) {
+        String cwd = System.getProperty("user.dir");
+        String filePath = cwd + "/record.csv";
+
+        // Write data to CSV file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (int i = 0; i < startTimeList.size(); i++) {
+                String line = "Start: " + startTimeList.get(i) + ", Latency: " + 
+                            unorderedLatencyTimeList.get(i) + ", Request Type: " + 
+                            requestTypeList.get(i)  + ", Response Code: " + responseTypeList.get(i);
+
+                writer.write(String.join(",", line));
+                writer.newLine();
+            }
+            System.out.println("Data has been written to " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     
     @Override
     public void run() {
@@ -98,6 +122,9 @@ public class ClientRunnable extends Thread {
 
         List<Long> startTimeList = Collections.synchronizedList(new ArrayList<Long>());
         List<Long> endTimeList = Collections.synchronizedList(new ArrayList<Long>());
+        List<String> requestTypeList = Collections.synchronizedList(new ArrayList<String>());
+        List<Integer> responseTypeList = Collections.synchronizedList(new ArrayList<Integer>());
+
 
         // Pre total time
         Long startTime = System.currentTimeMillis();
@@ -138,6 +165,8 @@ public class ClientRunnable extends Thread {
                         // Send POST
                         atomicRequestCount.getAndIncrement();
                         HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+                        requestTypeList.add("POST");
+                        responseTypeList.add(response.statusCode());
 
                         // Post-PORT timestamp
                         long end = System.currentTimeMillis();
@@ -150,6 +179,9 @@ public class ClientRunnable extends Thread {
                             // Retry 5 more times
                             for (int k = 0; k < requestRetryCount; k++) {
                                 response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+                                requestTypeList.add("POST");
+                                responseTypeList.add(response.statusCode());
+
                                 atomicRequestCount.getAndIncrement();
                                 if (response.statusCode() == 200 || response.statusCode() == 201) {
                                     break;
@@ -207,6 +239,8 @@ public class ClientRunnable extends Thread {
             latencyTimeList.add(latency);
         }
 
+        List<Long> unorderedLatencyTimeList = new ArrayList<>(latencyTimeList);
+
         // Median response time
         Long medianResponseTime = 0L;
         Collections.sort(latencyTimeList);
@@ -257,5 +291,7 @@ public class ClientRunnable extends Thread {
         System.out.println("Maximum Response Time (ms): " + maxResponseTime);
         System.out.println("----------------------------------------------------");
 
+        // Step 4: Write to file
+        writeToFile(startTimeList, unorderedLatencyTimeList, requestTypeList, responseTypeList);
     }
 }
