@@ -208,7 +208,7 @@ public class ClientRunnable extends Thread {
         }
 
         // Median response time
-        Long medianResponseTime = 123456789L;
+        Long medianResponseTime = 0L;
         Collections.sort(latencyTimeList);
         if (latencyTimeList.size() >=2 && latencyTimeList.size() % 2 == 0) {
             int left = (latencyTimeList.size() / 2) - 1;
@@ -239,7 +239,7 @@ public class ClientRunnable extends Thread {
         int throughput = (int)(requests / totalTimeSeconds); // Must be in SECONDS not MILLISECONDS!
 
         // 99th Percentile
-        Long percentile99 = 123456789L;
+        Long percentile99 = 0L;
         // Calculation source https://goodcalculators.com/percentile-calculator/
         double percentileIndex = Math.ceil((latencyTimeList.size() - 1) * 0.99);
         percentile99 = latencyTimeList.get((int)percentileIndex);
