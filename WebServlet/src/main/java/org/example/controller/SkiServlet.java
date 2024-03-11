@@ -112,7 +112,6 @@ public class SkiServlet extends HttpServlet {
         // Convert request body from json to SkiLiftRideEvent
         try {
             lift = (SkiLiftRideEvent) gson.fromJson(sb.toString(), SkiLiftRideEvent.class);
-            return lift;
         } catch (JsonSyntaxException e) {
             // Handle JSON parsing error
             System.out.println("Failed to parse and convert JSON.");
